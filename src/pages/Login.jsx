@@ -14,9 +14,8 @@ export default function Login() {
         const login = async () => {
             try {
             const response = await axios.post("http://localhost:3300/login", logincred);
-
                 const data = await response.data
-                console.log(data)
+                localStorage.setItem('token', data.token)
             } catch (error) {
                 console.log(error)
             }

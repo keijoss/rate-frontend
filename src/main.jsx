@@ -9,6 +9,18 @@ import ProtectedRoutes from './hooks/Protect/ProtectedRoutes.jsx'
 import LoginRoute from './hooks/Protect/LoginRoute.jsx'
 import Register from './pages/Register.jsx'
 
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
+
+
+
 const BrowserRouter = createBrowserRouter([
   {
     path: "/login",
@@ -29,9 +41,11 @@ const BrowserRouter = createBrowserRouter([
   {
     path: "/home",
     element: (
-      <ProtectedRoutes>
-        <Home />
-      </ProtectedRoutes>
+        <QueryClientProvider client={queryClient}> 
+          <ProtectedRoutes>
+              <Home />
+          </ProtectedRoutes>
+        </QueryClientProvider>
     ),
   },
 ]);
