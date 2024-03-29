@@ -48,7 +48,7 @@ const queryClient = new QueryClient({
 
 const BrowserRouter = createBrowserRouter([
   {
-    path: "/login",
+    path: "/",
     element: (
       <LoginRoute>
         <Login />
