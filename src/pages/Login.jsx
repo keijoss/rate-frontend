@@ -91,7 +91,8 @@ export default function Login() {
             Password
           </label>
           <input
-            placeholder="Enter your password"
+            placeholder="Enter your current-password"
+            autoComplete='on'
             required
             type="password"
             className=" w-full rounded-md p-2 pl-5 text-sm"
@@ -103,7 +104,7 @@ export default function Login() {
         </button>
         <sub className="w-full text-center text-white font-normal mt-2">
           Does'nt have an Account yet?{" "}
-          <Link className="text-[#8287FE]">Create Account</Link>
+          <Link className="text-[#8287FE]" to={"/register"}>Create Account</Link>
         </sub>
       </form>
     </div>
