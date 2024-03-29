@@ -39,7 +39,7 @@ function useQueryVerifyToken() {
         } catch (error) {
           // console.log(error);
           localStorage.removeItem("token");
-          navigate("/login", { replace: true });
+          navigate("/", { replace: true });
 
         }
       },

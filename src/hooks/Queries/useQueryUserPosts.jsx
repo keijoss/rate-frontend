@@ -21,15 +21,12 @@ const useQueryUserPosts = () => {
             },
           }
         );
-
         const data = await response.data;
         setUserPosts(data);
-
         return data;
       } catch (error) {
         // console.error(error);
       }
-
       return "ee";
     },
     // refetchInterval: 1000,

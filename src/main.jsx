@@ -22,6 +22,7 @@ import Like from './pages/subPages/Like.jsx'
 import Dislike from './pages/subPages/Dislike.jsx'
 import Home from './pages/subPages/Home.jsx'
 import Teacher from './pages/subPages/Teacher.jsx'
+import AdminHolds from './pages/subPages/AdminHolds.jsx'
 
 
 // const Login = lazy(() => import('./pages/Login.jsx'))
@@ -88,6 +89,10 @@ const BrowserRouter = createBrowserRouter([
       {
         path: "/AuthorizedUser/teacher",
         element: <Teacher />,
+      },
+      {
+        path: "/AuthorizedUser/adminHolds",
+        element: <AdminHolds/>,
       }
     ],
   },

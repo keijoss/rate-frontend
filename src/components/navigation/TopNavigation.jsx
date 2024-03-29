@@ -84,6 +84,16 @@ export default function TopNavigation() {
         >
           Dislike
         </button>
+        <Link
+          to={"adminHolds"}
+          className={ ` ${
+            navigation.pathname.split("/")[2] === "dislike"
+              ? "text-[#8287FE]"
+              : "text-white"
+          } `}
+        >
+          Admin Manage
+        </Link>
       </div>
       <div>
         <button

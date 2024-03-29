@@ -7,6 +7,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 
 export default function Authorized() {
+  
   return (
     <div className="px-4 ">
       <TopNavigation />
