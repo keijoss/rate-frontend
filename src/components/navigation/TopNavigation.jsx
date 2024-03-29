@@ -94,7 +94,7 @@ export default function TopNavigation() {
             setallposts(null);
             setUserPost(null);
             setsubject(null);
-            navigate("/login");
+            navigate("/");
           }}
         >
           Logout
