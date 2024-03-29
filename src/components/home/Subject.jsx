@@ -8,10 +8,10 @@ export default function Subject() {
   const userSubjects = useUserSubjects(state => state.subjects)
 
   return (
-    <div className=" opacity-50 cursor-not-allowed">
+    <div className=" cursor-not-allowed">
       <p className="text-white font-bold mb-4">Your Subjects</p>
       <div className="space-y-2 bg-[#28343E] rounded-xl p-4 py-6">
-        {userSubjects.map((subject, index) => (
+        {userSubjects?.map((subject, index) => (
           <div
             key={index}
             className="bg-[#1B2730] text-[0.7rem] flex justify-between items-center p-2 px-5 rounded-full text-white"

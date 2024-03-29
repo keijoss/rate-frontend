@@ -9,11 +9,16 @@ import useUserInformation from "@/hooks/Store/useUserInformation";
 import useUserPosts from "@/hooks/Store/useUserPosts";
 import useQueryUserPosts from "@/hooks/Queries/useQueryUserPosts";
 import axios from "axios";
+import useQueryAllPosts from "@/hooks/Queries/useQueryAllPosts";
+import useAllPosts from "@/hooks/Store/useAllPosts";
+import { Toaster } from "@/components/ui/sonner";
+import { useRef } from "react";
 
 export default function Post() {
   const userSubject = useUserSubjects((state) => state.subjects);
   const [userSubjects, setUserSubjects] = useState(null);
   const userInfromation = useUserInformation((state) => state.information);
+  const { refetch: allPostrefetch } = useQueryAllPosts();
   const { refetch } = useQueryUserPosts();
   const [ratings, setRatings] = useState({
     teaching_methods: 0,
@@ -23,11 +28,15 @@ export default function Post() {
     organization: 0,
     attitude: 0,
   });
+  const refuse = useRef();
   const submitPost = (e) => {
     e.preventDefault();
+
     const post = async () => {
-      console.log(localStorage.getItem("token"));
       try {
+        if (e.target[2].value == "null" || e.target[1].value == "null") {
+          throw new Error();
+        }
         const response = await axios.post(
           "http://localhost:3300/ratings",
           {
@@ -35,7 +44,8 @@ export default function Post() {
               student_id: userInfromation.id,
               teacher_subject_id: userSubject?.filter(
                 (subject) =>
-                  subject.teacher == userSubjects && e.target[2].value
+                  subject.teacher == userSubjects &&
+                  subject.subject === e.target[2].value
               )[0].teacher_subject_id,
               comment: e.target[0].value,
               teaching_method: ratings.teaching_methods,
@@ -55,16 +65,18 @@ export default function Post() {
             },
           }
         );
-        console.log(response);
+
+        refetch();
+        allPostrefetch();
+        refuse.current.reset();
+        return;
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
 
     post();
-    refetch();
   };
-
   return (
     <div className="flex w-full p-3 bg-[#1B2730] rounded-lg">
       <div className="px-3">
@@ -75,10 +87,11 @@ export default function Post() {
           className="bg-white rounded-full w-10 h-10 object-cover"
         />
       </div>
-      <form className="w-full space-y-3" onSubmit={submitPost}>
+      <form className="w-full space-y-3" onSubmit={submitPost} ref={refuse}>
         <div className="flex w-full  bg-[#28343E] rounded-xl p-3 pl-6 gap-2">
           <textarea
             type="text"
+            name="comment"
             placeholder="Enter a comment for a teacher"
             className=" w-[70%]  resize-none  focus:outline-none focus:h-[200px] border-none  bg-transparent text-white rounded-md px-3 py-2"
             wrap="soft"
@@ -96,6 +109,7 @@ export default function Post() {
                   setUserSubjects(e.target.value);
                   console.log(e.target.value);
                 }}
+                name="teacher"
               >
                 <option className="text-black " value={null}>
                   Choose
@@ -116,10 +130,12 @@ export default function Post() {
             <div className="flex justify-center items-center w-full gap-4">
               <p className="text-white">Subject</p>
               <select
+                name="subject"
+                id="subject"
                 className="bg-transparent text-white  mp-3 w-full"
-                disabled={userSubjects == null}
+                disabled={userSubjects == "null"}
               >
-                <option className="text-black " value={null}>
+                <option className="text-black " value={"null"}>
                   Choose
                 </option>
                 {userSubject
@@ -151,7 +167,10 @@ export default function Post() {
                 fullSymbol={<img src={starcolored} alt="colored" />}
                 placeholderRating={ratings.teaching_methods}
                 onChange={(e) => {
-                  setRatings({ ...ratings, teaching_methods: e });
+                  setRatings({
+                    ...ratings,
+                    teaching_methods: e === ratings.teaching_methods ? 0 : e,
+                  });
                 }}
               />
             </div>
@@ -163,7 +182,10 @@ export default function Post() {
                 fullSymbol={<img src={starcolored} alt="colored" />}
                 placeholderRating={ratings.communication}
                 onChange={(e) => {
-                  setRatings({ ...ratings, communication: e });
+                  setRatings({
+                    ...ratings,
+                    communication: e === ratings.communication ? 0 : e,
+                  });
                 }}
               />
             </div>
@@ -175,7 +197,10 @@ export default function Post() {
                 fullSymbol={<img src={starcolored} alt="colored" />}
                 placeholderRating={ratings.supportiveness}
                 onChange={(e) => {
-                  setRatings({ ...ratings, supportiveness: e });
+                  setRatings({
+                    ...ratings,
+                    supportiveness: e === ratings.supportiveness ? 0 : e,
+                  });
                 }}
               />
             </div>
@@ -187,7 +212,10 @@ export default function Post() {
                 fullSymbol={<img src={starcolored} alt="colored" />}
                 placeholderRating={ratings.organization}
                 onChange={(e) => {
-                  setRatings({ ...ratings, organization: e });
+                  setRatings({
+                    ...ratings,
+                    organization: e === ratings.organization ? 0 : e,
+                  });
                 }}
               />
             </div>
@@ -199,7 +227,10 @@ export default function Post() {
                 fullSymbol={<img src={starcolored} alt="colored" />}
                 placeholderRating={ratings.engagement}
                 onChange={(e) => {
-                  setRatings({ ...ratings, engagement: e });
+                  setRatings({
+                    ...ratings,
+                    engagement: e === ratings.engagement ? 0 : e,
+                  });
                 }}
               />
             </div>

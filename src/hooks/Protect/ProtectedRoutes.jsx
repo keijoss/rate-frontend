@@ -1,15 +1,16 @@
-import React, { Children } from 'react'
+import React, { Children, useEffect } from 'react'
 import useQueryVerifyToken from '../Queries/useQueryVerifyToken'
 import useUserInformation from '../Store/useUserInformation';
+import useQueryUserPosts from '../Queries/useQueryUserPosts';
 
 function ProtectedRoutes({children}) {
   const { isLoading,isRefetching } = useQueryVerifyToken();
-
-  if (isLoading || isRefetching) {
+  const useinforation = useUserInformation((state) => state.information);
+  if (isLoading && useinforation === null ) {
     return <div>loading</div>;
-  }else{
-    return children
   }
+    return children
+  
 } 
  
 export default ProtectedRoutes

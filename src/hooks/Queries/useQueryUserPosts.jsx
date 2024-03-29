@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import useUserPosts from "../Store/useUserPosts";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -8,17 +7,19 @@ const useQueryUserPosts = () => {
   // /ratings/:id
   const setUserPosts = useUserPosts((state) => state.setPosts);
   const userInformation = useUserInformation((state) => state.information);
-  const {data, refetch, isLoading, isRefetching} = useQuery({
-    queryKey: [121321, "ratings"],
+  const { data, refetch, isLoading, isRefetching } = useQuery({
+    queryKey: [2222222222, "ratings"],
     queryFn: async () => {
+      
       try {
+        // console.log("fetching data user ratings");
         const response = await axios.get(
           `http://localhost:3300/ratings/user/${userInformation.id}`,
           {
             headers: {
               authorization: `${localStorage.getItem("token")}`,
             },
-          } 
+          }
         );
 
         const data = await response.data;
@@ -26,12 +27,13 @@ const useQueryUserPosts = () => {
 
         return data;
       } catch (error) {
-        console.log("WHAT TO DO WITH THIS ERROR?");
-        console.error(error);
+        // console.error(error);
       }
 
       return "ee";
     },
+    // refetchInterval: 1000,
+    refetchOnWindowFocus: false,
   });
    
   return {

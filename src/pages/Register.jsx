@@ -38,15 +38,15 @@ export default function Register() {
   function onSubmit(values) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
+    // console.log(values);
 
     const register = async () => {
         try {
             const register = await axios.post('http://localhost:3300/register', values);
             const data = await register.data;
-            console.log(data)
+            // console.log(data)
         } catch (error) {
-            console.log(error)
+            // console.log(error)
         }
     }
     
