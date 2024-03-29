@@ -22,14 +22,16 @@ export default function Login() {
         if(token){
 
           try{
-            const response =  axios.get("http://localhost:3300/verify", {
+            const response = axios
+              .get("https://ratemyteacher.onrender.com/verify", {
                 headers: {
                   "Content-Type": "application/json",
                   Authorization: `${token}`,
                 },
-              }).then((e) => {
-                if(e.data){
-                    navigate('/authorizeduser/home', {replace: true})
+              })
+              .then((e) => {
+                if (e.data) {
+                  navigate("/authorizeduser/home", { replace: true });
                 }
               });
           }catch(e){
@@ -54,8 +56,8 @@ export default function Login() {
         const login = async () => {
             try {
             const response = await axios.post(
-              "http://localhost:3300/login",
-              logincred,
+              "https://ratemyteacher.onrender.com/login",
+              logincred
             );
                 const data = await response.data
                 localStorage.setItem('token', data.token)

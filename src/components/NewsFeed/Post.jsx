@@ -38,7 +38,7 @@ export default function Post() {
           throw new Error();
         }
         const response = await axios.post(
-          "http://localhost:3300/ratings",
+          "https://ratemyteacher.onrender.com/ratings",
           {
             data: {
               student_id: userInfromation.id,

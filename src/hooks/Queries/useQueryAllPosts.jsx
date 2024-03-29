@@ -99,12 +99,15 @@ function useQueryAllPosts() {
     queryFn: async () => {
       try {
         // console.log("fetching data raitings")
-        const response = await axios.get("http://localhost:3300/ratings", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `${localStorage.getItem("token")}`,
-          },
-        });
+        const response = await axios.get(
+          "https://ratemyteacher.onrender.com/ratings",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `${localStorage.getItem("token")}`,
+            },
+          }
+        );
         const data = await response.data;
         setallPosts(await data);
 
@@ -118,7 +121,7 @@ function useQueryAllPosts() {
       }
     },
     refetchOnWindowFocus: false,
-    // refetchInterval: 1000,
+    refetchInterval: 1000,
   });
 
   return { allPosts, isRefetching, data, refetch, isLoading };

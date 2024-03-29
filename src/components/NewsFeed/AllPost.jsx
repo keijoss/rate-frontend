@@ -114,18 +114,17 @@ const {refetch} = useQueryUserPosts()
                       try {
                         // console.log(deleted)
                         const res = await axios.delete(
-                          `http://localhost:3300/ratings/${rating_id}`,
+                          `https://ratemyteacher.onrender.com/ratings/${rating_id}`,
                           {
-
                             headers: {
                               "Content-Type": "application/json",
                               authorization: `${localStorage.getItem("token")}`,
                             },
-                            data:{
-                              "deleted": deleted === 1 ? 0 : 1
-                            }
-                          },
-                          );
+                            data: {
+                              deleted: deleted === 1 ? 0 : 1,
+                            },
+                          }
+                        );
                         // console.log(res);
                         refetch()
                       } catch (error) {

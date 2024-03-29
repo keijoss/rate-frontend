@@ -22,12 +22,15 @@ function useQueryVerifyToken() {
         // console.log("fetching data verify token")
         try {
 
-          const response = await axios.get("http://localhost:3300/verify", {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `${token}`,
-            },
-          });
+          const response = await axios.get(
+            "https://ratemyteacher.onrender.com/verify",
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `${token}`,
+              },
+            }
+          );
 
           const decoded = await response.data;
           setuserinfromation(decoded);

@@ -14,7 +14,7 @@ const useQueryUserPosts = () => {
       try {
         // console.log("fetching data user ratings");
         const response = await axios.get(
-          `http://localhost:3300/ratings/user/${userInformation.id}`,
+          `https://ratemyteacher.onrender.com/ratings/user/${userInformation.id}`,
           {
             headers: {
               authorization: `${localStorage.getItem("token")}`,

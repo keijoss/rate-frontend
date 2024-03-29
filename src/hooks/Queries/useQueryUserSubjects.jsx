@@ -16,14 +16,14 @@ function useQueryUserSubjects() {
         // console.log("fetching data user subjects");
         const token = localStorage.getItem("token")
         const response = await axios.get(
-          `http://localhost:3300/teacherSubjects/user/${userInformation?.id}`,
+          `https://ratemyteacher.onrender.com/teacherSubjects/user/${userInformation?.id}`,
           {
             headers: {
               "Content-Type": "application/json",
               Authorization: token,
             },
           }
-          );
+        );
           const data = await response.data;
 
           setSubject(data);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -15,7 +15,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAllPosts from "@/hooks/Store/useAllPosts";
+import useUserPosts from "@/hooks/Store/useUserPosts";
+import useUserSubjects from "@/hooks/Store/useUserSubjects";
+import useUserInformation from "@/hooks/Store/useUserInformation";
 
 const formSchema = z.object({
   student_id: z
@@ -42,6 +46,41 @@ export default function Register() {
       password: "",
     },
   });
+  const navigate = useNavigate();
+  const setuserinfromation = useUserInformation(
+    (state) => state.setinformation
+  );
+  const setallposts = useAllPosts((state) => state.setallPosts);
+  const setUserPost = useUserPosts((state) => state.setPosts);
+  const setsubject = useUserSubjects((state) => state.setSubjects);
+  const [errors, isError] = useState();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      try {
+        const response = axios
+          .get("https://ratemyteacher.onrender.com/verify", {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `${token}`,
+            },
+          })
+          .then((e) => {
+            if (e.data) {
+              navigate("/authorizeduser/home", { replace: true });
+            }
+          });
+      } catch (e) {
+        // console.log("errore", e)
+        localStorage.removeItem("token");
+        setuserinfromation(null);
+        setallposts(null);
+        setUserPost(null);
+        setsubject(null);
+      }
+    }
+  }, []);
 
   // 2. Define a submit handler.
   function onSubmit(values) {
@@ -59,6 +98,7 @@ export default function Register() {
         console.log("registered");
         const data = await register.data;
         console.log(data);
+        navigate("/authorizeduser/home", { replace: true });
       } catch (error) {
         console.log(error);
       }
