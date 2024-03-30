@@ -1,21 +1,20 @@
-import React from "react";
-import useSubjectTeacher from "../Store/useSubjectTeacher";
+import React from 'react'
+import useTeachers from '../Store/useTeachers';
 import useUserInformation from "../Store/useUserInformation";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import useenrolledCourseds from '../Store/useEnrolledCoursed';
 
-export default function useQuerySubjectTeacher() {
-  const setsubjectTeacher = useSubjectTeacher(
-    (state) => state.setsubjectTeacher
-  );
+export default function useQueryEnrollledCourses() {
+  const setenrolled = useenrolledCourseds((state) => state.setenrolledCoursed);
+  
   const userInformation = useUserInformation((state) => state.information);
-
   const { data, refetch, isLoading, isRefetching } = useQuery({
-    queryKey: [197, "teachingsubss"],
+    queryKey: [986568, "enrolledss"],
     queryFn: async () => {
       try {
         // const response = await axios.get(
-        //   `https://ratemyteacher.onrender.com/teacherSubjects`,
+        //   `https://ratemyteacher.onrender.com/studentteackingcourses`,
         //   {
         //     headers: {
         //       authorization: `${localStorage.getItem("token")}`,
@@ -23,7 +22,7 @@ export default function useQuerySubjectTeacher() {
         //   }
         // );
         const response = await axios.get(
-          `http://localhost:3300/teacherSubjects`,
+          `http://localhost:3300/studentteackingcourses`,
           {
             headers: {
               authorization: `${localStorage.getItem("token")}`,
@@ -31,7 +30,7 @@ export default function useQuerySubjectTeacher() {
           }
         );
         const data = await response.data;
-        setsubjectTeacher(data);
+        setenrolled(data);
         return data;
       } catch (error) {
         console.error(error);
